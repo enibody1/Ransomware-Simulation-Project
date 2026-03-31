@@ -1,22 +1,21 @@
-# Ransomware Simulation Project
+# Ransomware Simulation & Detection Project (Red Team + Blue Team)
 
-This project is a simulated ransomware script designed for educational and research purposes only. It demonstrates how ransomware operates in a controlled environment to help learners understand the underlying mechanics of malicious file encryption, as well as to aid in developing defenses against such attacks.
+## 📌 Project Overview
+This project is a controlled ransomware simulation designed to demonstrate how ransomware attacks operate, how they impact systems, and how they can be detected and mitigated.
 
-## Disclaimer
+The project combines both offensive (red team) and defensive (blue team) perspectives to provide a complete understanding of ransomware behavior.
 
-This project is for educational purposes only. Do NOT use it on any system without explicit permission. I do not condone or support the use of ransomware for malicious purposes.
+---
 
-## Features
+## 👨‍💻 Role & Objective
 
-- Simulates ransomware behavior by encrypting files in a specified directory.
+In this project, I acted as a cybersecurity analyst simulating:
 
-- Uses the cryptography library for symmetric key encryption (Fernet).
+- Ransomware attack behavior (encryption, persistence, user impact)
+- Detection strategies used by security teams
+- Defensive measures to mitigate ransomware threats
 
-- Generates an encryption key and stores it separately.
-
-- Displays a ransom note with instructions.
-
-- Includes functionality to decrypt files if the correct key is provided.
+The goal is to bridge the gap between understanding attacks and defending against them.
 
 ## Technologies Used
 
@@ -27,62 +26,95 @@ This project is for educational purposes only. Do NOT use it on any system witho
 ## Project Structure
 ```bash
 
-RSP-Evil-Team/
+The project is modular and structured to simulate real-world ransomware components:
+
+Ransomware Simulation & Detection Project (Red Teamn + Blue Team)/
 │
 ├── encryptor.py            # Main script to encrypt files and write ransom notes
 ├── decryptor.py            # Main script to decrypt files and restore original filenames
-├── ransomware_gui.py       # GUI for the ransomware attack (e.g., countdown, warnings)
+├── ransomware_gui.py       # GUI for the ransomware attack notifications (e.g., countdown, warnings)
 ├── decryption_gui.py       # GUI for showing decryption success and displaying decrypted files
 ├── persistence.py          # Persistence setup for simulating autostart on system boot
 ├── decryption_log.txt      # Log of decrypted files (generated after decryption)
 ├── key.key                 # Encryption key file used during encryption and decryption
 ├── ransom_note.txt         # Template ransom message (used in script)
+├── ransomware_detector.py  # Detects suspicious activity 
 ├── demo_files/             # Directory containing demo files for encryption/decryption
 └── README.md               # Project README file (this file)
 ```
-## Files
+## 🔐 Ransomware Simulation (Red Team Perspective)
 
-- ```encryptor.py```: This script is responsible for encrypting files in a specified directory (demo_files). It generates a unique encryption key, encrypts the files, and saves them with a .txt extension. It also writes a ransom note in each folder containing encrypted files.
+### Attack Flow:
 
-- ```decryptor.py```: This script is used to decrypt files that have been encrypted by the encryptor.py. It reads the key from the key.key file, decrypts the .txt files (which were originally encrypted), and restores the original filenames. It also launches a GUI showing a list of decrypted files.
+1. Traverse target directory (`demo_files`)
+2. Identify files for encryption
+3. Generate encryption key
+4. Encrypt files using symmetric encryption (Fernet)
+5. Rename files to simulate user confusion
+6. Display ransom message via GUI
+7. Simulate persistence (autostart behavior)
 
-- ```ransomware_gui.py```: This script contains the graphical user interface (GUI) for the ransomware simulation. It includes a countdown timer that is shown to the user before the attack is initiated. This script manages the window that alerts the user of the encryption process.
+### Encryption Method:
+- Uses Python `cryptography` library (Fernet)
+- Demonstrates secure symmetric encryption principles
 
-- ```decryption_gui.py```: This file is responsible for the GUI displayed after the decryption is complete. It shows the user a list of successfully decrypted files and provides options like "Open Folder" to view the restored files or "Close" to exit the GUI.
+⚠️ Note:
+In real-world ransomware, encryption keys are not stored locally but are securely exfiltrated or protected using asymmetric encryption.
 
-- ```persistence.py```: This script simulates the persistence mechanism for the ransomware, ensuring it runs automatically at startup (to mimic the persistence of ransomware on a system). It sets up a cron job to run the ransomware each time the system reboots, simulating a real-world ransomware persistence mechanism.
+## 🛡️ Detection & Defense (Blue Team Perspective)
 
-- ```decryption_log.txt```: This file is created by decryptor.py after successfully decrypting files. It logs all the decrypted file paths for reference. The log helps the user verify which files were decrypted during the recovery process.
+This project also includes a ransomware detection module to simulate how security teams identify malicious activity.
 
-- ```ransom_note.txt```: Simulated ransom instructions.
+### Detection Indicators:
+- Rapid file modifications (mass encryption behavior)
+- Suspicious file extensions or renamed files
+- Unusual process activity
+- Unexpected file access patterns
 
-## How It Works
+### Defensive Strategies:
+- Monitor file system activity for anomalies  
+- Use Endpoint Detection & Response (EDR) tools  
+- Maintain regular backups  
+- Restrict unauthorized script execution  
+- Implement least privilege access controls  
 
-1. The ransomware script searches for files in a given directory.
+## ⚠️ Risk & Impact Analysis
 
-2. It encrypts the files using a randomly generated key.
+Ransomware attacks can result in:
+- Data loss or inaccessibility  
+- Operational downtime  
+- Financial loss  
+- Reputational damage  
 
-3. It saves the key to a file and deletes the original versions.
+This simulation highlights how quickly systems can be impacted if proper defenses are not in place.
 
-4. A ransom note is created, mimicking real-world ransomware tactics.
+## 📊 SOC Relevance
 
-5. The decrypt.py script can be used with the key to reverse the encryption.
+This project demonstrates skills relevant to Security Operations Center (SOC) roles:
 
-## Setup and Usage
+- Understanding ransomware attack lifecycle  
+- Threat detection awareness  
+- Incident response thinking  
+- Log and behavior analysis  
+- Defensive security strategies  
 
-### Requirements
+## 🧪 Safe Testing Environment
 
-- Python 3.9
-- Install dependencies:
-```pip install cryptography```
+All operations are limited to the `demo_files` directory to ensure safe execution.
 
-### Running the Ransomware Simulation
-```python encryptor.py```
+## ⚠️ Disclaimer
 
-### Decryption (after getting the key)
-```python decryptor.py```
+This project is strictly for educational purposes.
 
-Ensure the key.key file is present in the same directory before running the decrypt script.
+Do NOT run on:
+- Production systems  
+- Personal devices with important data  
+
+Always use controlled environments when testing.
+
+## 🧠 Key Takeaway
+
+Understanding how ransomware works is essential for building effective detection and response strategies. This project demonstrates both the attack mechanics and the defensive mindset required to mitigate such threats.
 
 ## Educational Use Cases
 
